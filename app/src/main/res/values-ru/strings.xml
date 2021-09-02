@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="restart">ПЕРЕЗАГРУЗИТЬ</string>
+    <string name="update_just_been_downloaded">Обновление загружено.</string>
+
+</resources>
