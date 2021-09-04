@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">InAppUpdate</string>
-
     <string name="restart">RESTART</string>
     <string name="update_just_been_downloaded">An update has just been downloaded.</string>
+    <string name="update_start_downloading">Background download has started.</string>
 </resources>

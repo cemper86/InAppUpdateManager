@@ -2,4 +2,5 @@
 <resources>
     <string name="restart">YENİDƏN BAŞLAMAQ</string>
     <string name="update_just_been_downloaded">Yeniləmə yenicə endirildi.</string>
+    <string name="update_start_downloading">Arxa plana endirmə başladı.</string>
 </resources>

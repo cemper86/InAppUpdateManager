@@ -23,9 +23,7 @@ import com.google.android.play.core.tasks.Task;
 
 import java.lang.ref.WeakReference;
 
-import static com.wellsoft.inappupdate.InAppUpdateConstants.FLEXIBLE;
-import static com.wellsoft.inappupdate.InAppUpdateConstants.IMMEDIATE;
-import static com.wellsoft.inappupdate.InAppUpdateConstants.REQUEST_CODE;
+import static com.wellsoft.inappupdate.InAppUpdateConstants.*;
 
 
 public class InAppUpdateManager implements LifecycleObserver {
@@ -49,6 +47,9 @@ public class InAppUpdateManager implements LifecycleObserver {
 
     private boolean isWarningUpdate;
     private Integer stalenessDays;
+    private boolean isExistUpdates;
+
+    private boolean isShowStartDownLoading;
 
 
     private InAppUpdateManager(AppCompatActivity activity) {
@@ -83,6 +84,10 @@ public class InAppUpdateManager implements LifecycleObserver {
         return this;
     }
 
+    public void setExistUpdates(boolean existUpdates) {
+        isExistUpdates = existUpdates;
+    }
+
     private String getStringMode(int mode){
         return mode == FLEXIBLE ? "FLEXIBLE" : "IMMEDIATE";
     }
@@ -107,6 +112,8 @@ public class InAppUpdateManager implements LifecycleObserver {
                 if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
                     // Request the update.
                     writeLog("Обновление доступно");
+                    isShowStartDownLoading = true;
+                    isExistUpdates = true;
                     if(isWarningUpdate){
                         if(appUpdateInfo.isUpdateTypeAllowed(IMMEDIATE)){
                             writeLog("Обновление разрешено IMMEDIATE");
@@ -137,6 +144,7 @@ public class InAppUpdateManager implements LifecycleObserver {
                         }
                     }
                 } else {
+                    isExistUpdates = false;
                     writeLog("Нет доступных обновлений");
                 }
             }
@@ -162,6 +170,10 @@ public class InAppUpdateManager implements LifecycleObserver {
             if (installState.installStatus() == InstallStatus.DOWNLOADING) {
                 long bytesDownloaded = installState.bytesDownloaded();
                 long totalBytesToDownload = installState.totalBytesToDownload();
+                if(isShowStartDownLoading){
+                    isShowStartDownLoading = false;
+                    popupSnackbarForStartLoadingUpdate();
+                }
                 if (flexibleUpdateDownloadListener != null) {
                     writeLog("Обновление загружается: " + bytesDownloaded + " / " + totalBytesToDownload);
                     flexibleUpdateDownloadListener.onDownloadProgress(bytesDownloaded, totalBytesToDownload);
@@ -190,6 +202,15 @@ public class InAppUpdateManager implements LifecycleObserver {
                 appUpdateManager.completeUpdate();
             }
         });
+        snackbar.show();
+    }
+
+    private void popupSnackbarForStartLoadingUpdate() {
+        Snackbar snackbar =
+                Snackbar.make(
+                        getActivity().getWindow().getDecorView().findViewById(android.R.id.content),
+                        R.string.update_start_downloading,
+                        Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
     }
 

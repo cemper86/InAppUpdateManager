@@ -3,5 +3,6 @@
 
     <string name="restart">ПЕРЕЗАГРУЗИТЬ</string>
     <string name="update_just_been_downloaded">Обновление загружено.</string>
+    <string name="update_start_downloading">Началась фоновая загрузка обновления.</string>
 
 </resources>

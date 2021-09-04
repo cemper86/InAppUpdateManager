@@ -2,4 +2,5 @@
 <resources>
     <string name="restart">ҚАЙТАДАН ҚОСУ</string>
     <string name="update_just_been_downloaded">Жаңарту жаңадан жүктелді.</string>
+    <string name="update_start_downloading">Фондық жүктеу басталды.</string>
 </resources>

@@ -2,4 +2,5 @@
 <resources>
     <string name="restart">ПЕРЕЗАПУСК</string>
     <string name="update_just_been_downloaded">Щойно завантажено оновлення.</string>
+    <string name="update_start_downloading">Почалася фонове завантаження поновлення.</string>
 </resources>
